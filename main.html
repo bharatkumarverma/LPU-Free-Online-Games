@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LPU FREE ONLINE GAMES</title> <!-- Updated Title -->
+    <style>
+        /* 3D Background Effect */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff4e50, #f9d423, #24c6dc, #514a9d);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: #fff;
+            perspective: 1000px;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Centered Container */
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 3D Button Effect */
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #ff4e50;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 3D Input Field Effect with Black Background */
+        input[type="text"] {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #fff;
+            outline: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: rgb(0, 0, 0); /* Black background */
+            color: #fff; /* White text color for contrast */
+            margin-bottom: 15px;
+        }
+
+        input[type="text"]:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        h1, h2, p {
+            margin: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Hide game container initially */
+        #game-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="name-container">
+        <h1>Welcome to LPU Free Online Games!</h1> <!-- Updated Welcome Message -->
+        <p>Please enter your name to start:</p>
+        <input type="text" id="userName" placeholder="Enter your name">
+        <button onclick="startGame()">Start</button>
+    </div>
+
+    <div class="container" id="game-container">
+        <h1 id="welcome-message"></h1>
+        <p>Choose rock, paper, or scissors:</p>
+        <input type="text" id="userInput" placeholder="Enter your choice">
+        <button onclick="playGame()">Play</button>
+        <p id="result"></p>
+        <div id="leaderboard">
+            <h2>Leaderboard</h2>
+            <p id="user-score">Your Wins: 0 | Your Losses: 0</p>
+            <p id="bharat-score">Bharat's Wins: 0 | Bharat's Losses: 0</p>
+        </div>
+    </div>
+
+    <script>
+        let userWins = 0;        // User's win count
+        let userLosses = 0;      // User's loss count
+        let bharatWins = 0;      // Bharat's win count
+        let bharatLosses = 0;    // Bharat's loss count
+
+        // Function to start the game after entering the name
+        function startGame() {
+            const userName = document.getElementById("userName").value.trim();
+            if (userName) {
+                // Hide name input container and show game container
+                document.getElementById("name-container").style.display = "none";
+                document.getElementById("game-container").style.display = "block";
+                
+                // Display welcome message with the user's name
+                document.getElementById("welcome-message").innerText = `Hello, ${userName}! Let's play!`;
+            } else {
+                alert("Please enter your name to continue.");
+            }
+        }
+
+        // Function to play the game
+        function playGame() {
+            const choices = ["rock", "paper", "scissors"];
+            const bharat = choices[Math.floor(Math.random() * choices.length)];
+            const you = document.getElementById("userInput").value.toLowerCase();
+            let result = "";
+
+            if (choices.includes(you)) {
+                result += "Bharat chose: " + bharat + "<br>";
+                result += "You chose: " + you + "<br>";
+
+                if (bharat === you) {
+                    result += "It's a tie!";
+                } else if ((bharat === "rock" && you === "paper") ||
+                           (bharat === "paper" && you === "scissors") ||
+                           (bharat === "scissors" && you === "rock")) {
+                    result += "You win!";
+                    userWins++;
+                    bharatLosses++;
+                } else {
+                    result += "Bharat wins!";
+                    bharatWins++;
+                    userLosses++;
+                }
+            } else {
+                result = "Please enter a valid choice: rock, paper, or scissors.";
+            }
+
+            document.getElementById("result").innerHTML = result;
+            document.getElementById("user-score").innerHTML = `Your Wins: ${userWins} | Your Losses: ${userLosses}`;
+            document.getElementById("bharat-score").innerHTML = `Bharat's Wins: ${bharatWins} | Bharat's Losses: ${bharatLosses}`;
+        }
+    </script>
+</body>
+</html>
